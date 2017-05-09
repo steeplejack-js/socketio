@@ -2,7 +2,7 @@
  * index.test
  */
 
-"use strict";
+'use strict';
 
 /* Node modules */
 const EventEmitter = require('events').EventEmitter;
@@ -18,7 +18,7 @@ const expect = helpers.expect;
 const proxyquire = helpers.proxyquire;
 const sinon = helpers.sinon;
 
-describe("Socket.IO tests", function () {
+describe('Socket.IO tests', function () {
 
   beforeEach(function () {
 
@@ -28,38 +28,38 @@ describe("Socket.IO tests", function () {
       socket: {
         socket: {
           disconnect: sinon.spy(),
-          id: "socketId",
+          id: 'socketId',
           join: sinon.spy(),
           leave: sinon.spy(),
-          on: sinon.stub()
+          on: sinon.stub(),
         },
         nsp: {
           emit: sinon.stub(),
-          to: sinon.stub()
-        }
+          to: sinon.stub(),
+        },
       },
       broadcast: sinon.stub(),
       disconnect: sinon.stub(),
       getId: sinon.stub(),
       joinChannel: sinon.stub(),
       leaveChannel: sinon.stub(),
-      data: []
+      data: [],
     };
 
     expect(obj).to.have.keys([
       'default',
-      'inject'
+      'inject',
     ]);
 
     expect(obj.inject).to.be.eql({
-      name: 'steeplejack-socketio'
+      name: 'steeplejack-socketio',
     });
 
     const out = obj.default();
 
     expect(out).to.have.keys([
       'socketIOLib',
-      'SocketIO'
+      'SocketIO',
     ]);
 
     expect(out.socketIOLib).to.be.equal(io);
@@ -71,33 +71,9 @@ describe("Socket.IO tests", function () {
 
   });
 
-  describe("#broadcast", function () {
+  describe('#broadcast', function () {
 
-    it("should send to the socket id if no target set", function () {
-
-      const emitter = sinon.spy();
-      emitter.emit = sinon.spy();
-
-      this.socketRequest.socket.nsp.to.returns(emitter);
-
-      const broadcast = {
-        event: "some event",
-        data: [
-          1, 2, 5
-        ]
-      };
-
-      expect(this.inst.broadcast(this.socketRequest, broadcast)).to.be.undefined;
-
-      expect(this.socketRequest.socket.nsp.to).to.be.calledOnce
-        .calledWithExactly("socketId");
-
-      expect(emitter.emit).to.be.calledOnce
-        .calledWithExactly("some event", 1, 2, 5);
-
-    });
-
-    it("should send to target", function () {
+    it('should send to the socket id if no target set', function () {
 
       const emitter = sinon.spy();
       emitter.emit = sinon.spy();
@@ -105,67 +81,91 @@ describe("Socket.IO tests", function () {
       this.socketRequest.socket.nsp.to.returns(emitter);
 
       const broadcast = {
-        event: "some event2",
-        target: "some target",
+        event: 'some event',
         data: [
-          1, 2, 5, 6
-        ]
+          1, 2, 5,
+        ],
       };
 
       expect(this.inst.broadcast(this.socketRequest, broadcast)).to.be.undefined;
 
       expect(this.socketRequest.socket.nsp.to).to.be.calledOnce
-        .calledWithExactly("some target");
+        .calledWithExactly('socketId');
 
       expect(emitter.emit).to.be.calledOnce
-        .calledWithExactly("some event2", 1, 2, 5, 6);
+        .calledWithExactly('some event', 1, 2, 5);
 
     });
 
-    it("should send to everything if target is null", function () {
+    it('should send to target', function () {
+
+      const emitter = sinon.spy();
+      emitter.emit = sinon.spy();
+
+      this.socketRequest.socket.nsp.to.returns(emitter);
 
       const broadcast = {
-        event: "some2 event2",
+        event: 'some event2',
+        target: 'some target',
+        data: [
+          1, 2, 5, 6,
+        ],
+      };
+
+      expect(this.inst.broadcast(this.socketRequest, broadcast)).to.be.undefined;
+
+      expect(this.socketRequest.socket.nsp.to).to.be.calledOnce
+        .calledWithExactly('some target');
+
+      expect(emitter.emit).to.be.calledOnce
+        .calledWithExactly('some event2', 1, 2, 5, 6);
+
+    });
+
+    it('should send to everything if target is null', function () {
+
+      const broadcast = {
+        event: 'some2 event2',
         target: null,
         data: [
-          1, 3, 5
-        ]
+          1, 3, 5,
+        ],
       };
 
       expect(this.inst.broadcast(this.socketRequest, broadcast)).to.be.undefined;
 
       expect(this.socketRequest.socket.nsp.emit).to.be.calledOnce
-        .calledWithExactly("some2 event2", 1, 3, 5);
+        .calledWithExactly('some2 event2', 1, 3, 5);
 
     });
 
   });
 
-  describe("#connect", function () {
+  describe('#connect', function () {
 
     beforeEach(function () {
       this.sock = {
         of: sinon.stub(),
-        use: sinon.stub()
+        use: sinon.stub(),
       };
       this.sock.of.returns(this.sock);
       this.inst.inst = this.sock;
     });
 
-    it("should set middleware and emit a connect event", function (done) {
+    it('should set middleware and emit a connect event', function (done) {
 
-      const emit = sinon.spy(this.inst, "emit");
+      const emit = sinon.spy(this.inst, 'emit');
 
       this.sock.on = (eventName, fn) => {
 
-        expect(fn("socket")).to.be.undefined;
+        expect(fn('socket')).to.be.undefined;
 
-        expect(eventName).to.be.equal("connection");
+        expect(eventName).to.be.equal('connection');
 
         expect(emit).to.be.calledOnce
-          .calledWithExactly("/namespace/event_connected", {
-            socket: "socket",
-            nsp: this.sock
+          .calledWithExactly('/namespace/event_connected', {
+            socket: 'socket',
+            nsp: this.sock,
           });
 
         done();
@@ -174,17 +174,17 @@ describe("Socket.IO tests", function () {
 
       const fn = [
         () => {},
-        () => {}
+        () => {},
       ];
 
-      expect(this.inst.connect("/namespace/event", fn)).to.be.equal(this.inst);
+      expect(this.inst.connect('/namespace/event', fn)).to.be.equal(this.inst);
 
 
     });
 
   });
 
-  describe("#createSocket", function () {
+  describe('#createSocket', function () {
 
     beforeEach(function () {
 
@@ -193,27 +193,27 @@ describe("Socket.IO tests", function () {
 
       const strat = new Strategy();
       strat.getRawServer = sinon.stub()
-        .returns("server");
+        .returns('server');
 
-      const io = sinon.stub()
-        .returns("inst");
+      const socketIo = sinon.stub()
+        .returns('inst');
 
-      const SocketIO = proxyquire("../../src/strategy", {
-        "socket.io": io
+      const SocketIO = proxyquire('../../src/strategy', {
+        'socket.io': socketIo,
       }).SocketIO;
 
       const sock = new SocketIO();
 
       expect(sock.createSocket(strat)).to.be.undefined;
 
-      expect(sock.inst).to.be.equal("inst");
+      expect(sock.inst).to.be.equal('inst');
     });
 
   });
 
-  describe("#disconnect", function () {
+  describe('#disconnect', function () {
 
-    it("should call the disconnect on the socket", function () {
+    it('should call the disconnect on the socket', function () {
 
       expect(this.inst.disconnect(this.socketRequest.socket)).to.be.undefined;
 
@@ -224,52 +224,52 @@ describe("Socket.IO tests", function () {
 
   });
 
-  describe("#getSocketId", function () {
+  describe('#getSocketId', function () {
 
-    it("should return the socketId", function () {
+    it('should return the socketId', function () {
 
-      expect(this.inst.getSocketId(this.socketRequest.socket)).to.be.equal("socketId");
+      expect(this.inst.getSocketId(this.socketRequest.socket)).to.be.equal('socketId');
 
     });
 
   });
 
-  describe("#joinChannel", function () {
+  describe('#joinChannel', function () {
 
-    it("should join the channel", function () {
+    it('should join the channel', function () {
 
-      expect(this.inst.joinChannel(this.socketRequest.socket, "channelName")).to.be.undefined;
+      expect(this.inst.joinChannel(this.socketRequest.socket, 'channelName')).to.be.undefined;
 
       expect(this.socketRequest.socket.socket.join).to.be.calledOnce
-        .calledWithExactly("channelName");
+        .calledWithExactly('channelName');
 
     });
 
   });
 
-  describe("#leaveChannel", function () {
+  describe('#leaveChannel', function () {
 
-    it("should leave the channel", function () {
+    it('should leave the channel', function () {
 
-      expect(this.inst.leaveChannel(this.socketRequest.socket, "channelName")).to.be.undefined;
+      expect(this.inst.leaveChannel(this.socketRequest.socket, 'channelName')).to.be.undefined;
 
       expect(this.socketRequest.socket.socket.leave).to.be.calledOnce
-        .calledWithExactly("channelName");
+        .calledWithExactly('channelName');
 
     });
 
   });
 
-  describe("#listen", function () {
+  describe('#listen', function () {
 
-    it("should listen to events", function () {
+    it('should listen to events', function () {
 
       const fn = () => {};
 
-      expect(this.inst.listen(this.socketRequest.socket, "eventName", fn)).to.be.undefined;
+      expect(this.inst.listen(this.socketRequest.socket, 'eventName', fn)).to.be.undefined;
 
       expect(this.socketRequest.socket.socket.on).to.be.calledOnce
-        .calledWithExactly("eventName", fn);
+        .calledWithExactly('eventName', fn);
 
     });
 
