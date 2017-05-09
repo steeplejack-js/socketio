@@ -15,6 +15,7 @@ deploy:
   provider: npm
   email: simon@simonemms.com
   api_key:
+    secure: umO0eZjywNtZSQ3D2lO2dQvzfPy/Y50E30n0jyXrk8SoMuoXl9gWTmkHCv4uTbeYmPnObmBPUH25rLJQzp7tq29SVDgrZmIP7DLUElyveymRD08W5UwdZiirYCFpRPviOBI7TkBBMYzKDw2SDj/RDC3e1WXsppFc6lvf1zQaf8C2B04N6En7JR5n/2SiuYK2lfw4utLbLdBkGvS2Q+anPzuT6v/7jeHbefwnv+kxYeFLDgQwMGb3AJa04rJ4BSEPQyceZr90R7tYCvv7E3b6k+Ilv+M9mT3ZXCggPNzDzJJ5PO/NHOiT5fvuWzNM2HOrz/2zbe0XrMicXJ8G+knM4Wjr7WOh65xLTu1NHjqjEQfhFr4rcYzlKFJZsaroE4RvoZzamlk+kYhtQMBxaoeCDTBzpLE4O14/55+K0f5w9Q7VibniyNecFx+twOOr+NH4VeGH6PMVfHsz8h2YXAI/MMq/dp19E+qs31ToMD6Zax7nsqo1LIwvBxv0gxMe1CRfLa9pGKBBjaufGmT0iICXE2nFa0uLCh/c+CfbJcSowziv5QLN/dWfxi1Tl2K83wkCt88SRqK+3ILDc5ZmdKb7CeinRGcwFfsywV0qJ0OgsNzEbZiJUzCPUuYHWaMIJLKAiUq3fD+0ZLhanxEdq++FaCILltyz7Pyld3ZE2GN7Jww=
   on:
       all_branches: true
       tags: true
