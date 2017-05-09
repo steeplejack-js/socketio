@@ -35,7 +35,7 @@ class SocketIO extends EventEmitter {
       const self = request.socket.nsp.to(broadcast.target);
 
       const args = [
-        broadcast.event
+        broadcast.event,
       ];
 
       self.emit.apply(self, args.concat(broadcast.data));
@@ -44,7 +44,7 @@ class SocketIO extends EventEmitter {
       const self = request.socket.nsp;
 
       const args = [
-        broadcast.event
+        broadcast.event,
       ];
 
       self.emit.apply(self, args.concat(broadcast.data));
@@ -67,11 +67,11 @@ class SocketIO extends EventEmitter {
 
     middleware.forEach(fn => nsp.use(fn));
 
-    nsp.on("connection", socket => {
+    nsp.on('connection', (socket) => {
       /* Send both the socket and the namespace */
       this.emit(`${namespace}_connected`, {
         socket,
-        nsp
+        nsp,
       });
     });
 
