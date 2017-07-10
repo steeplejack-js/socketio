@@ -1,6 +1,6 @@
 # Steeplejack SocketIO
 
-[SocketIO](http://socket.io) strategy for [Steeplejack](http://steeplejack.info)
+[SocketIO](http://socket.io) strategy for [Steeplejack](http://getsteeplejack.com)
 
 # Usage
 
